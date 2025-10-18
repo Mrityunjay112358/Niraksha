@@ -8,7 +8,6 @@ import Image from "next/image";
 interface TeamMember {
   name: string;
   role: string;
-  category: string;
   image?: string;
 }
 
@@ -18,13 +17,13 @@ export default function Team() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const teamMembers: TeamMember[] = [
-    { name: "Ruhaan Bhansali", role: "Founder", category: "Leadership" },
-    { name: "Rehaan Dogra", role: "Founder", category: "Leadership", image: "/team/rehaan.jpeg" },
-    { name: "Piyush Dhumal", role: "Founder", category: "Leadership" },
-    { name: "Mrityunjay Gupta", role: "Co-Founder", category: "Leadership", image: "/team/mrityunjay.jpeg" },
-    { name: "Aaditya Jain", role: "Co-Founder", category: "Leadership" },
-    { name: "Ritwika", role: "Design Head", category: "Creative" },
-    { name: "Yashkit Jain", role: "Outreach Head", category: "Operations" },
+    { name: "Ruhaan Bhansali", role: "Founder" },
+    { name: "Rehaan Dogra", role: "Founder", image: "/team/rehaan.jpeg" },
+    { name: "Piyush Dhumal", role: "Founder" },
+    { name: "Mrityunjay Gupta", role: "Co-Founder", image: "/team/mrityunjay.jpeg" },
+    { name: "Aaditya Jain", role: "Co-Founder" },
+    { name: "Ritwika", role: "Design Head" },
+    { name: "Yashkit Jain", role: "Outreach Head" },
   ];
 
   return (
@@ -61,7 +60,7 @@ export default function Team() {
           <div className="w-24 h-1 bg-deep-green mx-auto mt-6" />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {teamMembers.map((member, index) => (
             <motion.div
               key={index}
@@ -70,97 +69,77 @@ export default function Team() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               onHoverStart={() => setHoveredCard(index)}
               onHoverEnd={() => setHoveredCard(null)}
-              className="relative group"
+              whileHover={{ scale: 1.05 }}
+              className="relative"
             >
               <motion.div
-                className="relative p-8 bg-beige rounded-2xl border-2 border-deep-green/20 overflow-hidden cursor-pointer"
-                whileHover={{ y: -10 }}
-                transition={{ duration: 0.3 }}
+                className="flex flex-col items-center bg-[#EFE6C7] rounded-2xl shadow-md p-8 transition-all duration-300 h-full"
+                style={{
+                  boxShadow:
+                    hoveredCard === index
+                      ? "0 20px 40px rgba(31, 94, 55, 0.2)"
+                      : "0 10px 20px rgba(0, 0, 0, 0.1)",
+                }}
               >
-                {/* Animated background gradient */}
+                {/* Radial background glow on hover */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-deep-green/10 via-transparent to-deep-green/5"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: hoveredCard === index ? 1 : 0 }}
+                  className="absolute inset-0 rounded-2xl opacity-0 pointer-events-none"
+                  animate={{
+                    opacity: hoveredCard === index ? 1 : 0,
+                  }}
                   transition={{ duration: 0.3 }}
+                  style={{
+                    background:
+                      "radial-gradient(circle at center, rgba(31, 94, 55, 0.08) 0%, transparent 70%)",
+                  }}
                 />
 
                 {/* Profile image */}
                 <div className="relative mb-6">
                   <motion.div
-                    className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-deep-green/20 to-tan border-4 border-deep-green/30 flex items-center justify-center text-5xl font-bold text-deep-green overflow-hidden"
+                    className="w-40 h-40 mx-auto rounded-full bg-gradient-to-br from-deep-green/10 to-tan/20 border-4 border-[#1F5E37] flex items-center justify-center text-6xl font-bold text-deep-green overflow-hidden shadow-sm"
                     animate={{
-                      borderColor:
+                      boxShadow:
                         hoveredCard === index
-                          ? "rgba(31, 94, 55, 0.6)"
-                          : "rgba(31, 94, 55, 0.3)",
+                          ? "0 8px 20px rgba(31, 94, 55, 0.3)"
+                          : "0 4px 10px rgba(0, 0, 0, 0.1)",
                     }}
+                    transition={{ duration: 0.3 }}
                   >
                     {member.image ? (
                       <Image
                         src={member.image}
                         alt={member.name}
                         fill
-                        className="object-contain"
-                        sizes="128px"
+                        className="object-cover"
+                        sizes="160px"
                       />
                     ) : (
                       member.name.charAt(0)
                     )}
                   </motion.div>
-
-                  {/* Animated ring on hover */}
-                  <motion.div
-                    className="absolute inset-0 rounded-full border-2 border-deep-green"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{
-                      scale: hoveredCard === index ? 1.1 : 0.8,
-                      opacity: hoveredCard === index ? 0.5 : 0,
-                    }}
-                    transition={{ duration: 0.4 }}
-                  />
                 </div>
 
                 {/* Member info */}
                 <div className="relative z-10 text-center">
-                  <h3 className="text-2xl font-semibold text-deep-green mb-2">
+                  <h3 className="text-2xl font-bold text-[#1F5E37] mb-2">
                     {member.name}
                   </h3>
-                  <div className="relative inline-block">
-                    <p className="text-deep-green/70 font-medium">
+
+                  {/* Green underline that grows on hover */}
+                  <div className="relative inline-block mb-2">
+                    <p className="text-[#3B7D41] font-semibold text-lg">
                       {member.role}
                     </p>
                     <motion.div
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-deep-green"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#1F5E37]"
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: hoveredCard === index ? 1 : 0 }}
                       transition={{ duration: 0.3 }}
+                      style={{ transformOrigin: "center" }}
                     />
                   </div>
-                  <p className="text-sm text-deep-green/50 mt-2">
-                    {member.category}
-                  </p>
                 </div>
-
-                {/* Decorative corner elements */}
-                <motion.div
-                  className="absolute top-0 right-0 w-16 h-16"
-                  animate={{
-                    rotate: hoveredCard === index ? 45 : 0,
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-deep-green/30" />
-                </motion.div>
-                <motion.div
-                  className="absolute bottom-0 left-0 w-16 h-16"
-                  animate={{
-                    rotate: hoveredCard === index ? 45 : 0,
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-deep-green/30" />
-                </motion.div>
               </motion.div>
             </motion.div>
           ))}

@@ -156,7 +156,7 @@ export default function Mission() {
           key={i}
           className="absolute text-4xl opacity-20"
           initial={{
-            x: Math.random() * window.innerWidth,
+            x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1000),
             y: -50,
           }}
           animate={{
