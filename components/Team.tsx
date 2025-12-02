@@ -22,7 +22,8 @@ export default function Team() {
     { name: "Piyush Dhumal", role: "Founder" },
     { name: "Mrityunjay Gupta", role: "Co-Founder", image: "/team/mrityunjay.jpeg" },
     { name: "Aaditya Jain", role: "Co-Founder" },
-    { name: "Ritwika", role: "Design Head" },
+    { name: "Daksh Jain", role: "Co-Founder", image: "/team/daksh.jpeg" },
+    { name: "Ritwika Sinwer", role: "Design Head" },
     { name: "Yashkit Jain", role: "Outreach Head" },
   ];
 
